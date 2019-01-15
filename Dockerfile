@@ -3,22 +3,13 @@ MAINTAINER Benjamin Hutchins <ben@hutchins.co>
 
 ENV DEBIAN_FRONTEND noninteractive
 
-# Version of Nginx to install
-ENV NGINX_VERSION 1.9.7-1~jessie
-
-RUN apt-key adv \
-  --keyserver hkp://pgp.mit.edu:80 \
-  --recv-keys 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
-
-RUN echo "deb http://nginx.org/packages/mainline/debian/ jessie nginx" >> /etc/apt/sources.list
-
 RUN set -x; \
     apt-get update \
     && apt-get install -y --no-install-recommends \
         locales \
         gettext \
         ca-certificates \
-        nginx=${NGINX_VERSION} \
+        nginx \
     && rm -rf /var/lib/apt/lists/*
 
 RUN locale-gen en_US.UTF-8 && dpkg-reconfigure locales
@@ -61,6 +52,7 @@ ENV LANG en_US.UTF-8
 ENV LC_TYPE en_US.UTF-8
 
 ENV TAIGA_SSL False
+ENV TAIGA_SSL_BY_REVERSE_PROXY False
 ENV TAIGA_ENABLE_EMAIL False
 ENV TAIGA_HOSTNAME localhost
 ENV TAIGA_SECRET_KEY "!!!REPLACE-ME-j1598u1J^U*(y251u98u51u5981urf98u2o5uvoiiuzhlit3)!!!"
